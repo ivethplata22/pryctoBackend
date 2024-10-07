@@ -8,6 +8,11 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             type: DataTypes.INTEGER
         },
+        uuid_cliente: {
+            type: DataTypes.STRING(10),
+            unique: true,
+            allowNull: false
+        },
         nombre_cliente: {
             type: DataTypes.STRING(100),
             allowNull: true

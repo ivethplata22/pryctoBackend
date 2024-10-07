@@ -1,5 +1,6 @@
 CREATE TABLE `clientes` (
   `id_cliente` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `uuid_cliente` varchar(10) UNIQUE,
   `nombre_cliente` varchar(100),
   `email` varchar(100),
   `telefono` varchar(15),
