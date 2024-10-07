@@ -1,0 +1,20 @@
+{
+    "development": {
+        "user": "usuario",
+        "host": "host",
+        "database": "base de datos",
+        "password": "contraseña",
+        "port": 3306,
+        "dialect": "mysql",
+        "timezone": "-06:00"
+    },
+    "production": {
+        "user": "usuario",
+        "host": "host",
+        "database": "base de datos",
+        "password": "contraseña",
+        "port": 3306,
+        "dialect": "mysql",
+        "timezone": "-06:00"
+    }
+}
