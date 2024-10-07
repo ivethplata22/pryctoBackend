@@ -13,6 +13,9 @@ class Server {
 
         // Validaciones
         this.middlewares();
+
+        // Ruta principal de la aplicación
+        this.routes();
     }
 
     async conectarDB() {
@@ -29,6 +32,10 @@ class Server {
 
         // Conversion y lectura del body
         this.app.use( express.json() );
+    }
+
+    routes() {
+        this.app.use('/',require('./routes/index.routes'));
     }
 
     listen() {
