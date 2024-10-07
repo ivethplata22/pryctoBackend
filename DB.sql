@@ -41,3 +41,12 @@ CREATE TABLE `solicitudes` (
 ALTER TABLE `solicitudes` ADD FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`);
 
 ALTER TABLE `solicitudes` ADD FOREIGN KEY (`id_sucursal`) REFERENCES `sucursales` (`id_sucursal`);
+
+-- Crear Sucursales por defecto
+
+INSERT INTO sucursales (nombre_sucursal, direccion, telefono, gerente_sucursal) VALUES
+('Sucursal Centro', 'Av. Principal 123, Centro', '555-0123', 'Juan Pérez'),
+('Sucursal Norte', 'Calle Secundaria 456, Norte', '555-0456', 'María Gómez'),
+('Sucursal Sur', 'Calle Tercera 789, Sur', '555-0789', 'Carlos Martínez'),
+('Sucursal Este', 'Av. Este 321, Este', '555-0101', 'Ana López'),
+('Sucursal Oeste', 'Calle Cuarta 654, Oeste', '555-0654', 'Luis Fernández');
