@@ -62,11 +62,16 @@ class DataBaseValidate extends AppController {
             const cliente = await this.models.Cliente.findOne({
                 where: {
                     id_cliente
+                },
+                attributes: {
+                    exclude: ['created_at', 'updated_at', 'deleted_at', 'createdAt', 'updatedAt', 'deletedAt']
                 }
             });
 
             if(!cliente)
                 return res.status(400).json({msg: 'No se encontró el cliente'});
+
+            req.body.cliente = JSON.parse(JSON.stringify(cliente));
 
             next();
         } catch (error) {

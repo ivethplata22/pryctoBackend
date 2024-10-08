@@ -26,6 +26,9 @@ router.post('/solicitudesCredito', MiddleCredito.solicitudesCredito, credito.sol
 // R - Obtener solicitudes de crédito por ID Cliente
 router.get('/solicitudes/:id_cliente', MiddleCredito.obtenerSolicitudes, credito.obtenerSolicitudes);
 
+// R - Obtener Cliente por ID
+router.get('/cliente/:id_cliente', MiddleCliente.obtenerCliente, cliente.obtenerCliente);
+
 // U - Actualizar datos de un Cliente
 router.put('/actualizar/:id_cliente', MiddleCliente.actualizarCliente, cliente.actualizarCliente);
 

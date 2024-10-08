@@ -9,6 +9,11 @@ const databaseV = new DataBaseValidate();
 
 // Validaciones
 const MiddleCliente = {
+    obtenerCliente: [
+        check('id_cliente', 'El id del cliente es obligatorio').notEmpty(),
+        validateFields,
+        databaseV.existeClienteID
+    ],
     actualizarCliente: [
         check('id_cliente', 'El id del cliente es obligatorio').notEmpty(),
         check('nombre', 'El nombre del cliente es obligatorio').notEmpty(),
