@@ -67,7 +67,7 @@ class FunctionsValidate extends AppController {
                     !solicitud.telefono ||
                     !regexTel.test(solicitud.telefono) ||
                     !solicitud.direccion ||
-                    typeof solicitud.ingresoM !== 'number' ||
+                    typeof solicitud.ingresomensual !== 'number' ||
                     typeof solicitud.monto !== 'number' ||
                     typeof solicitud.plazo !== 'number' ||
                     typeof solicitud.id_sucursal !== 'number'
@@ -94,7 +94,7 @@ class FunctionsValidate extends AppController {
                     email: solicitud.email,
                     telefono: solicitud.telefono,
                     direccion: solicitud.direccion,
-                    ingresoM: solicitud.ingresoM,
+                    ingresomensual: solicitud.ingresomensual,
                     id_sucursal: solicitud.id_sucursal,
                     monto: solicitud.monto,
                     plazo: solicitud.plazo
@@ -108,8 +108,6 @@ class FunctionsValidate extends AppController {
                 return res.status(400).json({msg: 'No se encontró alguna sucursal'});
 
             req.body.solicitudes = [...newArraySolicitudes];
-
-            return res.status(200).json({msg: '', solicitudes});
 
             next();
         } catch (error) {
