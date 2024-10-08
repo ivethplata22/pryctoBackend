@@ -136,3 +136,7 @@ Archivo con sintaxis de la Base de Datos
 Archivo con sintaxis de Store Procedures
 
     SP.sql
+
+Exportado de Postman para los endpoints
+
+    Prueba Tecnica.postman_collection.json
