@@ -41,7 +41,7 @@ class CreditoController extends AppController {
             if(!response.ok)
                 return res.status(400).json({msg: 'Error al crear la solicitud de crédito'});
 
-            return res.status(200).json({msg: 'Solicitud completada con éxito', estadoSolicitud});
+            return res.status(200).json({msg: 'Solicitud completada con éxito', estadoSolicitud, uuidCliente});
         } catch (error) {
             return res.status(500).json({msg: 'Error del Servidor', server: 'Controller'});
         }
