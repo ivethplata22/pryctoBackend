@@ -2,10 +2,19 @@
 
 const ClienteService = require('../src/services/cliente');
 const CreditoService = require('../src/services/credito');
+const SucursalService = require('../src/services/sucursal');
 const clienteS = new ClienteService();
 const creditoS = new CreditoService();
+const sucursalS = new SucursalService();
+const { sequelize } = require('../config/db');
 
 // Mockear la conexión a la base de datos
+
+jest.mock('../config/db', () => ({
+    sequelize: {
+        query: jest.fn()
+    }
+}));
 
 jest.mock('../src/services/credito', () => {
     return jest.fn().mockImplementation(() => {
@@ -41,6 +50,25 @@ jest.mock('../src/services/cliente', () => {
                 }
                 return Promise.resolve({ affectedRows: 1 });
             })
+        };
+    });
+});
+
+jest.mock('../src/services/sucursal', () => {
+    return jest.fn().mockImplementation(() => {
+        return {
+            obtenerSucursales: jest.fn(async () => {
+                return {
+                    ok: true,
+                    sucursales: [
+                        { id_sucursal: 1, nombre_sucursal: "Sucursal Centro" },
+                        { id_sucursal: 2, nombre_sucursal: "Sucursal Norte" },
+                        { id_sucursal: 3, nombre_sucursal: "Sucursal Sur" },
+                        { id_sucursal: 4, nombre_sucursal: "Sucursal Este" },
+                        { id_sucursal: 5, nombre_sucursal: "Sucursal Oeste" }
+                    ]
+                };
+            }),
         };
     });
 });
@@ -138,5 +166,29 @@ describe('Pruebas unitarias para actualizarCliente', () => {
 
     test('debería lanzar un error si el id_cliente no es válido', async () => {
         await expect(clienteS.actualizarCliente({ id_cliente: null })).rejects.toThrow('El ID del cliente no puede ser nulo');
+    });
+});
+
+// -- Obtener Sucursales
+
+describe('Pruebas unitarias para obtenerSucursales', () => {
+    test('debería obtener las sucursales correctamente', async () => {
+        const result = await sucursalS.obtenerSucursales();
+
+        expect(result).toBeDefined();
+        expect(result).toHaveProperty('ok', true);
+        expect(result.sucursales.length).toBe(5);
+    });
+
+    test('debería manejar errores en la obtención de sucursales', async () => {
+        const sucursalServiceMock = jest.fn().mockImplementation(() => {
+            return {
+                obtenerSucursales: jest.fn().mockRejectedValue(new Error('Error de conexión'))
+            };
+        });
+
+        const sucursalSMock = new sucursalServiceMock();
+
+        await expect(sucursalSMock.obtenerSucursales()).rejects.toThrow('Error de conexión');
     });
 });

@@ -3,8 +3,10 @@ const { Router } = require('express');
 // Controller
 const CreditoController = require('../../controllers/credito');
 const ClienteController = require('../../controllers/cliente');
+const SucursalController = require('../../controllers/sucursal');
 const credito = new CreditoController();
 const cliente = new ClienteController();
+const sucursal = new SucursalController();
 
 // Middlewares
 const MiddleCredito = require('../../middlewares/back/credito');
@@ -28,6 +30,9 @@ router.get('/solicitudes/:id_cliente', MiddleCredito.obtenerSolicitudes, credito
 
 // R - Obtener Cliente por ID
 router.get('/cliente/:id_cliente', MiddleCliente.obtenerCliente, cliente.obtenerCliente);
+
+// R - Obtener Sucursales
+router.get('/sucursales', sucursal.obtenerSucursales);
 
 // U - Actualizar datos de un Cliente
 router.put('/actualizar/:id_cliente', MiddleCliente.actualizarCliente, cliente.actualizarCliente);

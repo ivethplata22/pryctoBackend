@@ -124,7 +124,7 @@ DELIMITER //
 
 CREATE PROCEDURE obtener_sucursales ()
 BEGIN
-    SELECT * FROM sucursales;
+    SELECT id_sucursal, nombre_sucursal FROM sucursales;
 END //
 
 DELIMITER ;
