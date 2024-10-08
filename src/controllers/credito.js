@@ -15,6 +15,7 @@ class CreditoController extends AppController {
         this.solicitudCredito = this.solicitudCredito.bind(this);
         this.solicitudesCredito = this.solicitudesCredito.bind(this);
         this.obtenerSolicitudes = this.obtenerSolicitudes.bind(this);
+        this.indicadores = this.indicadores.bind(this);
     }
 
     // C - Crear solicitud de crédito - Datos Completos
@@ -111,7 +112,7 @@ class CreditoController extends AppController {
         }
     }
 
-    // G - Obtener solicitudes de crédito por ID Cliente
+    // R - Obtener solicitudes de crédito por ID Cliente
     async obtenerSolicitudes(req = request, res = response) {
         try {
             const { id_cliente } = req.params;
@@ -123,6 +124,23 @@ class CreditoController extends AppController {
             const { solicitudes } = response;
 
             return res.status(200).json(solicitudes);
+        } catch (error) {
+            return res.status(500).json({msg: 'Error del Servidor', server: 'Controller'});
+        }
+    }
+
+    // R - Obtener total de Aprobados y Rechazados
+    async indicadores(req = request, res = response) {
+        try {
+            const totalAprobados = await this.models.Solicitud.count({
+                where: { estado_solicitud: 'aprobado' }
+            });
+    
+            const totalRechazados = await this.models.Solicitud.count({
+                where: { estado_solicitud: 'rechazado' }
+            });
+
+            return res.status(200).json({totalAprobados, totalRechazados});
         } catch (error) {
             return res.status(500).json({msg: 'Error del Servidor', server: 'Controller'});
         }

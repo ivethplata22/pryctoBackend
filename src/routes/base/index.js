@@ -34,6 +34,9 @@ router.get('/cliente/:uuidcliente', MiddleCliente.obtenerCliente, cliente.obtene
 // R - Obtener Sucursales
 router.get('/sucursales', sucursal.obtenerSucursales);
 
+// R - Obtener total de Aprobados y Rechazados
+router.get('/indicadores', credito.indicadores);
+
 // U - Actualizar datos de un Cliente
 router.put('/actualizar/:id_cliente', MiddleCliente.actualizarCliente, cliente.actualizarCliente);
 
