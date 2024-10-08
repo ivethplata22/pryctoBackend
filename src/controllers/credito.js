@@ -49,8 +49,23 @@ class CreditoController extends AppController {
     // C - Crear solicitud de crédito - Usuario cargado
     async solicitudCredito(req = request, res = response) {
         try {
-            return res.status(200).json({msg: 'Solicitud completada con éxito'});
+            const { id_sucursal, monto, plazo } = req.body;
+            const { ingreso_mensual: ingresomensual, id_cliente } = req.body.cliente;
+            let tasaBase = 0.1; // Interes anual
+
+            // Criterios de validación
+            const ingresosRequeridos = monto / 3;
+            const estadoSolicitud = (ingresomensual < ingresosRequeridos) ? "rechazado" : "aprobado";
+            tasaBase = (ingresomensual < monto / 3) ? tasaBase += 0.05 : (ingresomensual < monto) ? tasaBase += 0.03 : 0.1;
+
+            // Crear registro solicitud
+            const response = await creditoS.crearSolicitud(id_cliente, id_sucursal, monto, plazo, tasaBase, estadoSolicitud);
+            if(!response.ok)
+                return res.status(400).json({msg: 'Error al crear la solicitud de crédito'});
+
+            return res.status(200).json({msg: 'Solicitud completada con éxito', estadoSolicitud});
         } catch (error) {
+            console.log(error);
             return res.status(500).json({msg: 'Error del Servidor', server: 'Controller'});
         }
     }

@@ -35,7 +35,7 @@ class DataBaseValidate extends AppController {
     // Existe Cliente Por UUID
     existeClienteUUID = async ( req = request, res = response, next ) => {
         try {
-            const uuidcliente = (req.params.uuidcliente) ? req.params.uuidcliente : req.body.uuidcliente;
+            const uuidcliente = (req.params.uuidcliente) ? req.params.uuidcliente.toUpperCase() : req.body.uuidcliente.toUpperCase();
 
             const cliente = await this.models.Cliente.findOne({
                 where: {
@@ -45,6 +45,8 @@ class DataBaseValidate extends AppController {
 
             if(!cliente)
                 return res.status(400).json({msg: 'No se encontró el cliente'});
+
+            req.body.cliente = JSON.parse(JSON.stringify(cliente));
 
             next();
         } catch (error) {
