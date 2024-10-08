@@ -30,6 +30,8 @@ BEGIN
         p_ingreso_mensual, 
         p_fecha_registro
     );
+
+    SELECT LAST_INSERT_ID() AS id_cliente;
 END //
 
 DELIMITER ;
@@ -186,7 +188,8 @@ CREATE PROCEDURE insertar_solicitud (
     IN p_plazo_meses INT,
     IN p_tasa_interes DECIMAL(5,2),
     IN p_estado_solicitud ENUM('aprobado', 'rechazado'),
-    IN p_fecha_solicitud DATE
+    IN p_fecha_solicitud DATE,
+    IN p_fecha_respuesta DATE
 )
 BEGIN
     INSERT INTO solicitudes (
@@ -196,7 +199,8 @@ BEGIN
         plazo_meses, 
         tasa_interes, 
         estado_solicitud, 
-        fecha_solicitud
+        fecha_solicitud,
+        fecha_respuesta
     )
     VALUES (
         p_id_cliente, 
@@ -205,8 +209,11 @@ BEGIN
         p_plazo_meses, 
         p_tasa_interes, 
         p_estado_solicitud, 
-        p_fecha_solicitud
+        p_fecha_solicitud,
+        fecha_respuesta
     );
+
+    SELECT LAST_INSERT_ID() AS id_solicitud;
 END //
 
 DELIMITER ;
