@@ -61,7 +61,6 @@ DELIMITER //
 
 CREATE PROCEDURE actualizar_cliente (
     IN p_id_cliente INT,
-    IN p_uuid_cliente VARCHAR(10),
     IN p_nombre_cliente VARCHAR(100),
     IN p_email VARCHAR(100),
     IN p_telefono VARCHAR(15),
@@ -71,7 +70,6 @@ CREATE PROCEDURE actualizar_cliente (
 BEGIN
     UPDATE clientes
     SET 
-        uuid_cliente = p_uuid_cliente,
         nombre_cliente = p_nombre_cliente,
         email = p_email,
         telefono = p_telefono,
