@@ -2,6 +2,10 @@ const { check } = require('express-validator');
 const { validateFields } = require('../validateFields');
 
 // Helpers y Middlewares
+const FunctionsValidate = require('../functions');
+const DataBaseValidate = require('../database');
+const functionsV = new FunctionsValidate();
+const databaseV = new DataBaseValidate();
 
 // Validaciones
 const MiddleCredito = {
@@ -14,22 +18,29 @@ const MiddleCredito = {
         check('id_sucursal', 'El id de la sucursal es obligatorio').notEmpty(),
         check('monto', 'El monto solicitado es obligatorio').notEmpty(),
         check('plazo', 'Plazo a meses en que se pagara').notEmpty(),
-        validateFields
+        validateFields,
+        functionsV.validarCorreo,
+        functionsV.validarTelefono,
+        databaseV.existeSucursalID
     ],
     solicitud: [
         check('uuidcliente', 'El identificador de cliente es obligatorio').notEmpty(),
         check('id_sucursal', 'El id de la sucursal es obligatorio').notEmpty(),
         check('monto', 'El monto solicitado es obligatorio').notEmpty(),
         check('plazo', 'Plazo a meses en que se pagara').notEmpty(),
-        validateFields
+        validateFields,
+        databaseV.existeClienteUUID,
+        databaseV.existeSucursalID
     ],
     solicitudesCredito: [
         check('solicitudes', 'El arreglo de solicitudes es obligatorio').notEmpty(),
-        validateFields
+        validateFields,
+        functionsV.validarEstructuraValida
     ],
     obtenerSolicitudes: [
         check('id_cliente', 'El id del cliente es obligatorio').notEmpty(),
-        validateFields
+        validateFields,
+        databaseV.existeClienteID
     ]
 };
 
