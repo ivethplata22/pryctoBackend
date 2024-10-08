@@ -40,6 +40,9 @@ class DataBaseValidate extends AppController {
             const cliente = await this.models.Cliente.findOne({
                 where: {
                     uuid_cliente: uuidcliente
+                },
+                attributes: {
+                    exclude: ['created_at', 'updated_at', 'deleted_at', 'createdAt', 'updatedAt', 'deletedAt']
                 }
             });
 
