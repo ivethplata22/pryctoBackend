@@ -13,6 +13,7 @@ class ClienteService extends AppController {
 
     // C - Crear Cliente
     // solicitudCreditoCompleto - credito controller
+    // solicitudesCredito - credito controller
     async crearCliente(uuidcliente, nombre, email, telefono, direccion, ingresomensual) {
         try {
             const [ results ] = await sequelize.query(

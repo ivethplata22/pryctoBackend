@@ -210,7 +210,7 @@ BEGIN
         p_tasa_interes, 
         p_estado_solicitud, 
         p_fecha_solicitud,
-        fecha_respuesta
+        p_fecha_respuesta
     );
 
     SELECT LAST_INSERT_ID() AS id_solicitud;
@@ -352,6 +352,37 @@ BEGIN
     SELECT * FROM solicitudes
     ORDER BY fecha_solicitud DESC
     LIMIT p_numero_registros;
+END //
+
+DELIMITER ;
+
+-- Obtener solicitudes por Cliente ID con Información de Sucursales
+
+DELIMITER //
+
+CREATE PROCEDURE obtenerSolicitudesPorCliente(
+    IN p_id_cliente INT
+)
+BEGIN
+    SELECT 
+        s.id_solicitud,
+        s.monto_solicitado,
+        s.plazo_meses,
+        s.tasa_interes,
+        s.estado_solicitud,
+        s.fecha_solicitud,
+        s.fecha_respuesta,
+        su.id_sucursal,
+        su.nombre_sucursal,
+        su.direccion,
+        su.telefono,
+        su.gerente_sucursal
+    FROM 
+        solicitudes AS s
+    JOIN 
+        sucursales AS su ON s.id_sucursal = su.id_sucursal
+    WHERE 
+        s.id_cliente = p_id_cliente;
 END //
 
 DELIMITER ;

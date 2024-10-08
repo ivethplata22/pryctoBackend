@@ -78,7 +78,6 @@ class CreditoController extends AppController {
 
         try {
             const resultados = await Promise.all(solicitudes.map(async (solicitud) => {
-                console.log(solicitud);
                 const { nombre, email, telefono, direccion, ingresomensual, id_sucursal, monto, plazo } = solicitud;
                 const uuidCliente = Math.random().toString(36).substring(2, 8).toUpperCase();
                 let tasaBase = 0.1; // Interés anual
@@ -108,7 +107,6 @@ class CreditoController extends AppController {
             return res.status(200).json({ msg: 'Todas las solicitudes completadas con éxito', resultados });
         } catch (error) {
             await transaccion.rollback();
-            console.log(error);
             return res.status(500).json({msg: 'Error del Servidor', server: 'Controller'});
         }
     }
@@ -116,7 +114,15 @@ class CreditoController extends AppController {
     // G - Obtener solicitudes de crédito por ID Cliente
     async obtenerSolicitudes(req = request, res = response) {
         try {
-            return res.status(200).json({msg: 'Mensaje'});
+            const { id_cliente } = req.params;
+
+            const response = await creditoS.obtenerSolicitudesClienteID(id_cliente);
+            if(!response.ok)
+                return res.status(400).json({msg: 'Error al obtener las solicitudes del cliente'});
+            
+            const { solicitudes } = response;
+
+            return res.status(200).json(solicitudes);
         } catch (error) {
             return res.status(500).json({msg: 'Error del Servidor', server: 'Controller'});
         }
